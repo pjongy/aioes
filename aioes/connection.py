@@ -37,10 +37,10 @@ class Connection:
         return self._session.close()
 
     @asyncio.coroutine
-    def perform_request(self, method, url, params, body):
+    def perform_request(self, method, url, params, body, headers={"Content-type":"application/json"}):
         url = self._base_url.with_path(url)
         resp = yield from self._session.request(
-            method, url, params=params, data=body)
+            method, url, params=params, data=body, headers=headers)
         resp_body = yield from resp.text()
         if not (200 <= resp.status <= 300):
             extra = None
